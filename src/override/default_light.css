@@ -1,0 +1,93 @@
+#optionsMenu p,
+#optionsMenu label {
+	color: #fff;
+}
+
+#taskAtHand .fa:hover {
+	color:#64bf56;
+}
+
+#optionsMenu #optionsGreeting {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+#optionsMenu ::-webkit-input-placeholder {
+	color: #fff;
+}
+
+#greeting p {
+	color: #fff;
+}
+
+/*--------------------------------*/
+
+#forecast {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+p,
+label,
+a,
+#forecastBox i,
+#date,
+#forecastBox,
+#menuName,
+#menuTools .fa,
+#notepadTextarea,
+#taskAtHand .fa,
+#textboxTitle,
+#textboxURL,
+#greetingTextbox,
+#optionsGreeting,
+#todoListTextbox,
+#topSitesMenu ol li {
+    color: #333;
+}
+
+#menuItem:hover,
+#taskAtHand:hover,
+#newsHighlight,
+#topSitesMenu ol li:hover {
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+#todoList,
+#news,
+#notepad,
+#menuTools,
+#newsHighlight:hover,
+#optionsGreeting,
+#topSitesMenu {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+#newsUnderbar {
+	color:#888B78;
+}
+
+#quickLinksHeaderDiv {
+	margin-top: -6px;
+	line-height: 26px;
+}
+
+#quickLinksHeader, #addNewQuickLink .fa {
+	color:#333;
+	opacity: 1;
+}
+
+#forecast #optionsGreeting {
+	color:#333;
+}
+
+#menuIcons, #menuName {
+	opacity: 1;
+}
+
+#quickLinksTextbox {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-input-placeholder {
+    color: #333;
+    opacity: 0.8;
+}

@@ -1,0 +1,15 @@
+#optionsGreeting {
+	background-color: #e74c3c;
+	color:#ecf0f1;
+}
+
+#quickLinksHeaderDiv {
+	margin-top: -6px;
+	background-color: #e74c3c;
+	line-height: 26px;
+}
+
+#quickLinksHeader, #addNewQuickLink .fa {
+	color:#ecf0f1;
+	opacity: 1;
+}

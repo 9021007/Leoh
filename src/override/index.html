@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<!--
+Todo:
+If you read this: Hiya!
+Dark + Red/Blue Theme
+No enter on new task
+More detailed weather on click of icon
+Image based on time and/or weather
+Different layouts?
+Widgets?
+-->
+
+<head>
+    <title>New tab</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <script src="jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Taviraj:400,700|Trirong:400,700" rel="stylesheet">
+</head>
+
+<body>
+    <div id="bg"></div>
+    <div id="altBg"></div>
+    <div class="reviewNotification" id="reviewNotification">
+        <p id="optionsGreeting">Howdy friend. Leoh is 100% free.</p>
+        <p id="subscribeBlurb">Please take 15 seconds and leave a review. Thanks!</p>
+        <div class="noBtn">
+        <button class="actionBtn reviewNo" id="notInterestedBtn">X</button>
+        </div>
+        <div class="actionBtns">
+        <button class="actionBtn review" id="interestedBtn">Sure! I'll review it</button>
+        </div>
+
+    </div>
+    <div class="reviewNotification" id="contactNotification">
+        <p id="optionsGreeting">Like Leoh? Please share with friends.</p>
+        <p id="subscribeBlurb">Sharing the link below means the WORLD to us:</p>
+        <input type="text" class="optionsTextbox" value="https://leoh.io/chrome">
+        <div class="noBtn">
+            <button class="actionBtn socialNo" id="notInterestedBtn">X</button>
+        </div>
+        <div class="actionBtns">
+            <button class="actionBtn facebook" id="interestedBtn"><i class="fa fa-facebook" aria-hidden="true"></i></button>
+            <button class="actionBtn twitter" id="interestedBtn"><i class="fa fa-twitter" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    <div id="zenVideoPlayer" style="position: fixed; z-index: -1; width: 1920px; height: 1080px; display:none">
+        <iframe frameborder="0" height="100%" width="100%">
+        </iframe>
+    </div>
+    <div id="searchResults">
+        <i id="searchClose" title="Close" class="fa fa-times"></i>
+        <iframe id="searchFrame" src=""></iframe>
+    </div>
+    <div id="topLeftIcons">
+        <div id="menu" title="Quick Links">
+            <i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i>
+        </div>
+        <div id="zenModeIconBtn" title="Zen Mode">
+            <i class="fa fa-heartbeat fa-fw"></i>
+        </div>
+        <div id="topSitesIcon" title="Most Visited">
+            <i class="fa fa-eye fa-fw"></i>
+        </div>
+        <div id="searchIcon" title="Search Google...">
+            <i class="fa fa-search fa-fw"></i>
+        </div>
+        <div class="searchEngine">
+            <input type="text" autocomplete="off" placeholder="Search Google..." id="searchTextbox" name="q" size="22" />
+        </div>
+    </div>
+    <div id="topSitesMenu">
+        <p id="optionsGreeting">Top Visited</p>
+        <ol>
+        </ol>
+    </div>
+    <div id="menuTools">
+        <a class="menuLinks" id="linkApps" href="chrome://apps/">
+            <div id="menuItem">
+                <div id="menuIcons"><i class="fa fa-th-large"></i></div>
+                <p id="menuName">Applications</p>
+            </div>
+        </a>
+        <a class="menuLinks" id="linkBookmarks" href="chrome://bookmarks/">
+            <div id="menuItem">
+                <div id="menuIcons"><i class="fa fa-bookmark"></i></div>
+                <p id="menuName">Bookmarks</p>
+            </div>
+        </a>
+        <a class="menuLinks" id="linkHistory" href="chrome://history/">
+            <div id="menuItem">
+                <div id="menuIcons"><i class="fa fa-history"></i></div>
+                <p id="menuName">History</p>
+            </div>
+        </a>
+        <hr>
+        <div id="quickLinksHeaderDiv">
+            <p id="quickLinksHeader">Quick Links</p>
+            <p id="addNewQuickLink"><i title="Add new quick link" class="fa fa-plus-square"></i></p>
+        </div>
+        <div id="quickLinksURLs"></div>
+        <div id="quickLinksTextbox">
+            <input id="textboxTitle" placeholder="Title" type="text" />
+            <input id="textboxURL" placeholder="Website (http:// required)" type="text" />
+        </div>
+    </div>
+    <div id="weather" title="Weather"></div>
+    <div id="forecast">
+        <p id="optionsGreeting">Weather Forecast</p>
+        <br>
+        <br>
+        <h1 id="date"></h1></div>
+    <div id="heyMessage">
+        <h1 id="time"></h1>
+        <h1 id="timeDate"></h1>
+        <h1 id="timeAMPM"></h1>
+        <h1 id="greeting">
+            <p id="objective">Today</p><br><div id='taskDoneCheckmark'><i class='fa fa-check'></i></div><label id='taskOfDay'><p id="task"></p><div id='taskIcons'><i id='removeCross' class='fa fa-times'></i><br><i id='doneCheck' class='fa fa-check'></i></div></label><!-- <input type='text' maxlength='80' id='greetingTextbox'> -->
+        </h1>
+        <h1 id="quote"></h1>
+    </div>
+    <div id="todoList">
+        <p id="optionsGreeting">Todo List</p>
+        <p id="todoGreeting"></p>
+        <div id="listOfTodos"></div>
+        <input type="text" id="todoListTextbox" placeholder="What needs to be done?" />
+        <br>
+    </div>
+    <div id="news">
+        <p id="optionsGreeting">
+        <select class="newsOption" id="optionsGreeting">
+            <option value="worldnews">World News</option>
+            <option value="politics">Politics</option>
+            <option value="science">Science</option>
+            <option value="science">Technology</option>
+            <option value="economics">Economics</option>
+            <option value="books">Books</option>
+            <option value="space">Space</option>
+            <option value="sports">Sports</option>
+            <option value="soccer">Soccer</option>
+            <option value="nfl">NFL</option>
+            <option value="NBA">NBA</option>
+            <option value="cfb">College Football</option>
+            <option value="fantasyfootball">Fantasy Football</option>
+            <option value="mlb">MLB</option>
+            <option value="mma">MMA</option>
+            <option value="hockey">Hockey</option>
+            <option value="nascar">Nascar</option>
+            <option value="formula1">Formula 1</option>
+            <option value="gadgets">Tech Gadgets</option>
+            <option value="philosophy">Philosophy</option>
+            <option value="europe">Europe</option>
+            <option value="apple">Apple</option>
+            <option value="games">Games</option>
+            <option value="leagueoflegends">League of Legends</option>
+            <option value="canada">Canada</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="bitcoin">Bitcoin</option>
+        </select></p>
+        <div id="newsArticles"></div>
+    </div>
+    <!-- Bottom Right Icons -->
+    <div id="bottomRightIcons">
+        <!-- <div id="calendarIcon"><i title="Calendar" class="fa fa-calendar"><span id="notificationCalendar" class="notificationCalendar"></span></i></div> -->
+        <div id="notepadIcon"><i title="Note Taker" class="fa fa-pencil-square-o"></i></div>
+        <div id="newsIcon"><i title="News" class="fa fa-newspaper-o"></i></div>
+        <div id="todoListIcon"><i title="Todo List" class="fa fa-th-list"><span id="notificationTodo" class="todoListNotification"></span></i></div>
+    </div>
+    <!-- End of Bottom Right Icons -->
+    <div id="notepad">
+        <p id="optionsGreeting">Note Taker</p>
+        <div id="notepadDiv">
+            <textarea maxlength="8000" id="notepadTextarea"></textarea>
+        </div>
+    </div>
+    <div id="calendar">
+        <div id="calHeader" style="display:none">
+            <button id="calBack" style="visibility: hidden;">
+                &lt;
+            </button>
+            <span id="calHeaderContent">
+                Today's Calendar
+            </span>
+            <button id="calForward">
+                &gt;
+            </button>
+        </div>
+        <div id="calendarAskPermission" style="display: block;">
+            <span>View your upcoming events with your Google Calendar!</span>
+            <button id="calendarSignIn">Sign in</button><br><br>
+            <div id="ignoreBtn">I'm not interested.</div>
+        </div>
+        <div id="calendarDailyEvents" style="display: none;"></div>
+    </div>
+    <!-- Options Panel -->
+    <!-- End of Options Panel. Start of Options Menu -->
+    <div id="optionsMenuBlur"></div>
+    <div id="optionsMenu">
+        <p id="optionsGreeting">
+            <a title="Visit leoh.io" target="_blank" href="https://leoh.io/">
+                <img id="logo" src="leoh.png" /></a>Options & Settings</p>
+        <div id="leftOptions">
+            <span id="generalOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-cogs fa-fw" ></i></span> General</p>
+            </span>
+            <span id="quickLinksOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-link fa-fw"></i></span> Quick Links</p>
+            </span>
+            <span id="socialOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-calendar fa-fw"></i></span> Calendar</p>
+            </span>
+            <span id="todoListOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-list-ul fa-fw"></i></span> Todo List</p>
+            </span>
+            <span id="weatherOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-cloud fa-fw"></i></span> Weather</p>
+            </span>
+            <span id="zenModeOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-heartbeat fa-fw"></i></span> Zen Mode</p>
+            </span>
+            <span id="backgroundOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-picture-o fa-fw"></i></span> Background</p>
+            </span>
+            <span id="clockOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-clock-o fa-fw"></i></span> Clock</p>
+            </span>
+            <p id="optionsGreeting"></p>
+            <span id="updateOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-refresh fa-fw"></i></span> New Update<span id="notificationOptions" class="notification">!</span></p>
+            </span>
+            <span id="aboutOptionsHeader"><p id="optionsHeader"><span id="optionsItemIcon"><i class="fa fa-question-circle fa-fw"></i></span> About</p>
+            </span>
+        </div>
+        <div id="rightOptions">
+            <div id="generalOptions">
+                <label>Task of the Day: </label>
+                <input type="text" class="optionsTextbox" id="nameTextbox" placeholder="What is your task of the day?" maxlength="70" />
+                <button class="setBtn" title="Enter required." id="enterTaskSet">Enter</button>
+                <input type="checkbox" id="taskSaved" />
+                <br>
+                <!--            <label>Font: </label>
+            <select name="fontSelector" id="fontSelector">
+              <option value="">Select Font</option>
+              <option name="helvetica neue, helvetica, arial" value="helvetica neue, helvetica, arial">Default</option>
+              <option name="Open Sans" value="Open Sans">Open Sans</option>
+              <option name="Roboto" value="Roboto">Roboto</option>
+              <option name="Lato" value="Lato">Lato</option>
+            </select><br> -->
+                <label>Theme: </label>
+                <select name="themeSelector" id="themeSelector">
+                    <option id="defaultTheme" value="">Select Theme</option>
+                    <option id="defaultTheme" value="">Default - Dark</option>
+                    <option id="defaultThemeBlue" value="default_blue.css">Default - Dark + Blue</option>
+                    <option id="defaultThemeRed" value="default_red.css">Default - Dark + Red</option>
+                    <option id="defaultLightTheme" value="default_light.css">Default - Light</option>
+                    <option id="flatWhiteBlueTheme" value="flat-white-blue.css">Flat White - Blue</option>
+                    <option id="flatWhiteRedTheme" value="flat-white-red.css">Flat White - Red</option>
+                    <option id="flatDarkTheme" value="flat-dark.css">Flat Dark</option>
+                </select>
+                <p class="prem" id="optionInstructions quotesOptions">Quotes:
+                        <input type="radio" class="optionsAMPM" id="quoteShow" name="quotes" value="on">
+                        <label class="radioInput" for="quoteShow">Show</label>
+                        <input type="radio" class="optionsAMPM" id="quoteHide" name="quotes" value="off" checked="radio">
+                        <label class="radioInput" for="quoteHide">Hide</label>
+                    </p>
+                <p id="pSep">Tool Actions</p>
+                <ul id="toolEvents">
+                    <li>
+                        <p id="toolDefiner">All</p>
+                        <input type="checkbox" name="optionsDisableAll" id="optionsDisableAll">
+                        <label class="checkInput" for="optionsDisableAll">Hide</label>
+                    </li>
+                    <li>
+                        <p id="toolDefiner">News</p>
+                        <input type="checkbox" name="optionsDisableNews" id="optionsDisableNews" />
+                        <label class="checkInput" for="optionsDisableNews">Hide </label><span id="gap"></span>
+                        <input type="checkbox" name="optionsAlwaysNews" id="optionsAlwaysNews">
+                        <label class="checkInput" for="optionsAlwaysNews">Active on open</label>
+                    </li>
+                    <li class="prem">
+                        <p id="toolDefiner">RSS</p>
+                        <input type="radio" class="optionsAMPM" id="rss" name="rss" value="show">
+                        <label class="radioInput" for="rss">RSS</label>
+                        <input type="radio" class="optionsAMPM" id="defaultNews" name="rss" value="hide" checked="radio">
+                        <label class="radioInput" for="defaultNews">Default News</label>
+                        <input type="text" class="optionsTextbox" id="rssTextbox" placeholder="RSS URL" />
+                    </li>
+                    <li>
+                        <p id="toolDefiner">Notepad</p>
+                        <input type="checkbox" name="optionsDisableNotepad" id="optionsDisableNotepad">
+                        <label class="checkInput" for="optionsDisableNotepad">Hide</label><span id="gap"></span>
+                        <input type="checkbox" name="optionsAlwaysNotepad" id="optionsAlwaysNotepad">
+                        <label class="checkInput" for="optionsAlwaysNotepad">Active on open</label>
+                    </li>
+                    <li>
+                        <p id="toolDefiner">Search</p>
+                        <input type="checkbox" name="optionsDisableSearch" id="optionsDisableSearch">
+                        <label class="checkInput" for="optionsDisableSearch">Hide</label><span id="gap"></span>
+                        <input type="checkbox" name="optionsAlwaysSearch" id="optionsAlwaysSearch">
+                        <label class="checkInput" for="optionsAlwaysSearch">Active on open</label>
+                        </li>
+                </ul>
+            </div>
+            <div id="backgroundOptions">
+                <input type="radio" name="optionsBackground" id="optionsRandomImage" checked="radio">
+                <label class="radioInput" for="optionsRandomImage">Random image </label>
+                <br>
+                <input type="radio" name="optionsBackground" id="optionsCustomImage">
+                <label class="radioInput" for="optionsCustomImage">Custom image:</label>
+                <input type="text" class="optionsTextbox" id="customImageTextbox" disabled="true" placeholder="e.g: http://i.imgur.com/jHszUe.png" />
+                <button class="setBtn" title="Enter required." id="enterCustomImage" disabled>Enter</button>
+                <br>
+                <input type="radio" name="optionsBackground" id="optionsBackgroundColor">
+                <label class="radioInput" for="optionsBackgroundColor">Background color:</label>
+                <input type="text" class="optionsTextbox" id="bgColor" maxlength="7" disabled="true" placeholder="e.g: #345678" />
+                <button class="setBtn" title="Enter required." id="enterBGColor" disabled>Enter</button>
+                <br>
+                <input type="radio" name="optionsBackground" id="optionsRandomColor">
+                <label class="radioInput" for="optionsRandomColor">Random color</label>
+                <br>
+                <input type="radio" name="optionsBackground" id="optionsAlbumImage">
+                <label class="radioInput" for="optionsAlbumImage">Random image from album:</label>
+                <textarea id="optionsAlbumImageTextarea" spellcheck="false" maxlength="8000" disabled="true" placeholder="Add image URLs here and separate using a new line."></textarea>
+                <p id="downloadImage"></p>
+            </div>
+            <div id="quickLinksOptions">
+                <textarea id="quickLinksSave" spellcheck="false">
+                    Google http://google.com YouTube http://youtube.com leoh http://leoh.io
+                </textarea>
+                <br>
+                <input type="checkbox" name="optionsDisableQuickLinks" id="optionsDisableQuickLinks">
+                <label class="checkInput" for="optionsDisableQuickLinks">Hide Quick Links Icon</label>
+                <br>
+                <input type="checkbox" name="optionsAlwaysOpenQuickLinks" id="optionsAlwaysOpenQuickLinks">
+                <label class="checkInput" for="optionsAlwaysOpenQuickLinks">Visible on open</label>
+                <br>
+                <p id="pSep">Top Visited</p>
+                <input type="checkbox" name="optionsDisableTop" id="optionsDisableTop">
+                <label class="checkInput" for="optionsDisableTop">Hide Top Visited Icon</label>
+                <br>
+                <input type="checkbox" name="optionsAlwaysTop" id="optionsAlwaysTop">
+                <label class="checkInput" for="optionsAlwaysTop">Visible on open</label>
+            </div>
+            <div id="weatherOptions">
+                <div id="weatherUnit">
+                    <label>Unit:</label>
+                    <input type="radio" id="unitf" name="unit" value="f" checked="radio">
+                    <label class="radioInput" for="unitf">&deg;F</label>
+                    <input type="radio" id="unitc" name="unit" value="c">
+                    <label class="radioInput" for="unitc">&deg;C</label>
+                    <br>
+                    <input type="radio" id="defaultLocation" checked="radio" name="setLocation">
+                    <label class="radioInput" for="defaultLocation">Use default geolocation</label>
+                    <br>
+                    <input type="radio" id="customLocation" name="setLocation">
+                    <label class="radioInput" for="customLocation">Custom location:</label>
+                    <input type="text" class="optionsTextbox" id="customLocationTextbox" disabled="true" placeholder="e.g: Austin, TX" />
+                    <button class="setBtn" title="Enter required." id="enterTaskSet">Enter</button>
+                    <br>
+                    <input type="checkbox" name="optionsDisableWeather" id="optionsDisableWeather">
+                    <label class="checkInput" for="optionsDisableWeather">Hide Weather Icon</label>
+                    <br>
+                    <input type="checkbox" name="optionsAlwaysOpenWeather" id="optionsAlwaysOpenWeather">
+                    <label class="checkInput" for="optionsAlwaysOpenWeather">Visible on open</label>
+                </div>
+            </div>
+            <div id="clockOptions">
+                <form id="timeType">
+                    <p id="optionInstructions">Type:
+                        <input type="radio" id="h:mm" name="type" value="h:mm" checked="radio">
+                        <label class="radioInput" for="h:mm">12 Hour</label>
+                        <input type="radio" id="HH:mm" name="type" value="HH:mm">
+                        <label class="radioInput" for="HH:mm">24 Hour</label>
+                    </p>
+                    <p id="optionInstructions">AM/PM:
+                        <input type="radio" class="optionsAMPM" id="ampmShow" name="ampm" value="am">
+                        <label class="radioInput" for="ampmShow">Show</label>
+                        <input type="radio" class="optionsAMPM" id="ampmHide" name="ampm" value="pm" checked="radio">
+                        <label class="radioInput" for="ampmHide">Hide</label>
+                    </p>
+                    <p class="prem" id="optionInstructions">Date:
+                        <input type="radio" class="optionsAMPM" id="dateShow" name="date" value="show">
+                        <label class="radioInput" for="dateShow">Show</label>
+                        <input type="radio" class="optionsAMPM" id="dateHide" name="date" value="hide" checked="radio">
+                        <label class="radioInput" for="dateHide">Hide</label>
+                    </p>
+                    <p id="optionInstructions">
+                    <input type="checkbox" name="optionsDisableClock" id="optionsDisableClock">
+                    <label class="checkInput" for="optionsDisableClock">Hide Clock</label>
+                    </p>
+                    <ul class="clockLocation prem">
+                        <li id="clockLocation">Clock Location:</li>
+                        <li><input type="radio" id="clockCustom" name="clockLocation" value="clockCustom" checked="radio">
+                        <label class="radioInput" for="clockCustom">Custom Location</label></li>
+                        <li><label>X Axis:</label><input id="xAxis" disabled class="optionsTextbox" placeholder="50" type="number"/></li>
+                        <li><label>Y Axis:</label><input id="yAxis" disabled class="optionsTextbox" placeholder="50" type="number"/></li>
+                        <li><input type="radio" id="clockMiddle" name="clockLocation" value="clockMiddle" checked="radio">
+                        <label class="radioInput" for="clockMiddle">Middle (default)</label></li>
+                    </ul>
+                    <ul class="clockLocation prem">
+                        <li id="clockLocation">Clock Font:</li>
+                        <li>
+                            <select id="clockFont">
+                                <option value="helvetica neue">Helvetica</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Roboto">Roboto</option>
+                                <option value="Lato">Lato</option>
+                                <option value="Droid Serif">Droid Serif</option>
+                                <option value="Inconsolata">Inconsolata</option>
+                                <option value="Taviraj">Taviraj</option>
+                                <option value="Trirong">Trirong</option>
+                            </select>
+                        </li>
+                        <li><label>Transparency:</label><input id="clockOpacity" class="optionsTextbox" placeholder="90" min="0" max="100" type="number"/></li>
+                        <li><input type="checkbox" id="clockBold" name="clockBold" value="clockBold" checked="radio">
+                        <label class="checkInput" for="clockBold">Bold</label></li>
+                    </ul>
+                </form>
+            </div>
+            <div id="todoListOptions">
+                <textarea id="todoListSave" spellcheck="false"></textarea>
+                <br>
+                <input type="checkbox" name="optionsDisableTodo" id="optionsDisableTodo">
+                <label class="checkInput" for="optionsDisableTodo">Hide Todo List Icon</label>
+                <br>
+                <input type="checkbox" name="optionsAlwaysTodo" id="optionsAlwaysTodo">
+                <label class="checkInput" for="optionsAlwaysTodo">Visible on open</label>
+            </div>
+            <div id="socialOptions">
+                <p id="optionInstructions">Select Calendar:
+                <div id="calendars"></div>
+                    <!-- <select id="calendarSelector">
+                        <option value="">None</option>
+                    </select> -->
+                </p><div class="paddingBottom"></div>
+                    <p id="optionInstructions">Calendar:
+                        <input type="checkbox" name="optionsDisableCalendar" id="optionsDisableCalendar">
+                    <label class="checkInput" for="optionsDisableCalendar">Hide</label><span id="gap"></span></p>
+                    <button id="calendarSignOut" class="setBtn" style="display: none;">Sign out</button>
+                <!-- <button id="saveBtn">Save & Apply</button> -->
+            </div>
+            <div id="zenModeOptions">
+                <button class="playZen" id="Ftm2uv7-Ybw"><i class="fa fa-play"></i> Campfire by River</button>
+                <button class="playZen" id="RDfjXj5EGqI"><i class="fa fa-play"></i> Fire Place</button>
+                <button class="playZen prem" id="pPrO2jlay40"><i class="fa fa-play"></i> Rainforest</button>
+                <button class="playZen" id="IadsLclBOS8"><i class="fa fa-play"></i> Autumn Forest</button>
+                <button class="playZen" id="A2_yg19Pu7Y"><i class="fa fa-play"></i> Ocean Sunrise</button>
+                <button class="playZen" id="V6cNXL2TUIM"><i class="fa fa-play"></i> Winter Snow</button>
+                <button class="playZen prem" id="6uhRxK_EOm4"><i class="fa fa-play"></i> Autumn River</button>
+                <button class="playZen" id="8myYyMg1fFE"><i class="fa fa-play"></i> Rain & Thunder</button>
+                <button class="playZen prem" id="Qm846KdZN_c"><i class="fa fa-play"></i> Quiet River</button>
+                <button class="playZen prem" id="THnQTYqoDzg"><i class="fa fa-play"></i> Waterfall</button>
+                <button class="playZen prem" id="MJ9-HmGWw1k"><i class="fa fa-play"></i> Windy Field</button>
+                <button class="playZen prem" id="l17ZmCPYJDU"><i class="fa fa-play"></i> Rustling Leaves</button>
+                <button class="playZen prem" id="cO_IFJaWmhA"><i class="fa fa-play"></i> Rocky Ocean</button>
+                <button class="playZen prem" id="pO2_D2iDz30"><i class="fa fa-play"></i> Light Rain & Thunder</button>
+                <button class="playZen prem" id="9lh_becOt4Y"><i class="fa fa-play"></i> Campfire at Night</button>
+                <button class="playZen prem" id="NUKKzdVy0EI"><i class="fa fa-play"></i> Lakeside Campfire</button>
+                <button class="playZen prem" id="NK2_bcQcoD4"><i class="fa fa-play"></i> Birds in Forest</button>
+                <button class="playZen prem" id="QX4j_zHAlw8"><i class="fa fa-play"></i> Tropical Island</button>
+                <button class="playZen prem" id="HTc_2XmKK-M"><i class="fa fa-play"></i> Quiet Beach</button>
+                <br><br>
+                <label>Custom Zen Video: </label>
+                <input type="text" class="optionsTextbox" id="zenCustomVideo" placeholder="YouTube video" />
+                <button class="setBtn" title="Enter required." id="enterTaskSet">Enter</button>
+                <input type="checkbox" name="optionsDisableZen" id="optionsDisableZen">
+                        <label class="checkInput" for="optionsDisableZen">Hide Zen Icon</label><span id="gap"></span>
+            </div>
+            <div id="update">
+                <p class="updateHeader"><u>You're running the latest version of leoh (v0.22.19)!</u></p>
+                <ul id="updateList">
+			               <li>After careful consideration we've decided to show ads far less often.</li>
+                </ul>
+                <p class="updateHeader">Thank you for using Leoh! <i class="fa fa-heart"></i>
+                    <p>
+                        <input type="checkbox" id="validUpdate" style="display:none">
+            </div>
+            <div id="aboutOptions">
+                <div id="about">
+                    <p class="aboutSection">Leoh is a free personal dashboard designed to make your life more productive.
+                        <br><br>Leoh is a work in progress and updated regularly. <br /><br />We are 100% free, if you have 30 seconds please leave an honest review:</p>
+                    <a href="https://leoh.io/chrome" target="_blank">
+                        <p id="rateItem"><span><i class="fa fa-thumbs-o-up"></i></span> Rate Leoh on Chrome Store</p>
+                    </a>
+                </div>
+            </div>
+            <button id="saveBtn">Save & Apply</button>
+            <button id="closeOptions">Close</button>
+        </div>
+    </div>
+    <div id="optionsIcon"><i title="Options" class="fa fa-cog"></i><span class="notification">!</span></div>
+    <h3 id="location"><a href="http://bit.ly/2yJd8zn" target="_blank">Ad Sumo.com - grow your email list</a></h3>
+    <div id="welcome_newInstaller">
+        <p id="welcome">Hiya!</p>
+        <p id="underWelcome">Welcome to <span id="leoh">leoh</span></p>
+        <br>
+        <hr>
+        <p id="howto">
+            <span id="numb">1.</span> Eveything is automatically saved and synced. Yay!
+            <br><br>
+            <span id="numb">2.</span> The gear wheel (<i class="fa fa-cog"></i>) is your options panel.
+            <br><br>
+            <span id="numb">3.</span> Quick Links (<i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i>) for quick access to your bookmarks, apps, and history.
+            <br><br>
+            <span id="numb">4.</span> Tell 1 friend. leoh.io new tab is 100% free. If you LOVE it, please tell 1 person :)
+            <br>
+        </p>
+            <br>
+            <button id="welcome_confirm">Cool, I got it!</button>
+    </div>
+    <script src="moment.js"></script>
+    <script src="func.js"></script>
+    <script src="load.js"></script>
+    <script src="jquery.simpleWeather.js"></script>
+    <script src="buy.js"></script>
+    <script src="livestamp.min.js"></script>
+    <script src="news.js"></script>
+    <script src="topvisited.js"></script>
+</body>
+
+</html>
